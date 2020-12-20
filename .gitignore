@@ -1,2 +1,4 @@
-organiser/keys.txt
+organiser/keys.*
 .idea/
+venv/
+*cache*
