@@ -2,3 +2,4 @@ organiser/keys.*
 .idea/
 venv/
 *cache*
+organiser/organiser*
