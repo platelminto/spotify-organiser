@@ -31,4 +31,4 @@ def get_newly_saved_songs(sp, offset: int = 0):
     with shelve.open('organiser') as db:
         db['last_checked'] = current_checked
 
-    return reversed(recently_saved_songs)  # Put back into chronological order for playlist order
+    return recently_saved_songs
