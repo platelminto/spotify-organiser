@@ -2,7 +2,7 @@ from typing import List
 
 import spotipy
 from datetime import datetime
-from organiser.user import get_user_id
+from user import get_user_id
 
 
 def _get_monthly_playlist_name():

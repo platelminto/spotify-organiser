@@ -1,5 +1,5 @@
-organiser/keys.*
+keys.ini
 .idea/
 venv/
 *cache*
-organiser/organiser*
+organiser
