@@ -27,8 +27,8 @@ def get_newly_saved_songs(sp, offset: int = 0):
     if not finished and last_saved_songs_object['next']:
         recently_saved_songs.append(get_newly_saved_songs(sp, offset + min_songs_check))
 
-    # Recursive writes will be overwritten by root one.
+    # Recursive writes will be overwritten by base one.
     with shelve.open('organiser') as db:
         db['last_checked'] = current_checked
 
-    return recently_saved_songs
+    return reversed(recently_saved_songs)  # Put back into chronological order for playlist order
