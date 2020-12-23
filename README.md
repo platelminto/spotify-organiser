@@ -18,5 +18,4 @@ Add environment variables `SPOTIPY_CLIENT_ID`, `SPOTIPY_CLIENT_SECRET`, and `SPO
 
 ## To do
 
-- At the beginning of the month, add songs from the end of the previous monthly playlist to the new one (~5 days?).
 - Use last.fm to find the genre of liked songs and add to genre playlists (config file will define which last.fm genres to link to which playlists).
