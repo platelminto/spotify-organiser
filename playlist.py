@@ -5,6 +5,37 @@ from datetime import datetime
 from user import get_user_id
 
 
+def add_songs_to_monthly_playlist(sp: spotipy.Spotify, uris: List[str]):
+    _add_songs_to_playlist(sp, uris, _get_monthly_playlist_id(sp))
+
+
+def add_songs_to_hash_playlist(sp: spotipy.Spotify, uris: List[str]):
+    _add_songs_to_playlist(sp, uris, _get_hash_playlist_id(sp))
+
+
+def _add_songs_to_playlist(sp: spotipy.Spotify, uris: List[str], playlist_id):
+    if uris:
+        sp.playlist_add_items(playlist_id, items=uris)
+
+
+def _get_monthly_playlist_id(sp: spotipy.Spotify):
+    return _get_playlist_id(sp, _get_monthly_playlist_identifier())
+
+
+def _get_hash_playlist_id(sp: spotipy.Spotify):
+    return _get_playlist_id(sp, "#")
+
+
+def _get_playlist_id(sp: spotipy.Spotify, identifier: str):
+    playlist_name = _get_monthly_playlist_name()
+
+    playlist_id = _find_playlist_id(sp, identifier, playlist_name)
+    if playlist_id:
+        return playlist_id
+
+    return _create_playlist(sp, playlist_name, description=identifier)['id']
+
+
 def _get_monthly_playlist_name():
     return datetime.utcnow().strftime("%B %Y")
 
@@ -50,19 +81,3 @@ def _find_playlist_id(sp: spotipy.Spotify, identifier, default_name):
 
 def _create_playlist(sp: spotipy.Spotify, playlist_name: str, description: str):
     return sp.user_playlist_create(get_user_id(sp), playlist_name, description=description)
-
-
-def _get_monthly_playlist_id(sp: spotipy.Spotify):
-    playlist_name = _get_monthly_playlist_name()
-    identifier = _get_monthly_playlist_identifier()
-
-    playlist_id = _find_playlist_id(sp, identifier, playlist_name)
-    if playlist_id:
-        return playlist_id
-
-    return _create_playlist(sp, playlist_name, description=identifier)['id']
-
-
-def add_songs_to_monthly_playlist(sp: spotipy.Spotify, uris: List[str]):
-    if uris:
-        sp.playlist_add_items(_get_monthly_playlist_id(sp), items=uris)
