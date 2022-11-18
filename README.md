@@ -18,6 +18,14 @@ Run again periodically: every time it runs, newly saved songs are added either t
 
 - Add newly saved songs to a monthly playlist, or one with a description ending with a '#' character.
 
+## crontab
+
+If you are using `cron` to schedule the job running, maybe copy this:
+
+```
+* * * * *  (cd /home/<user>/dev/spotify-organiser ; venv/bin/python main.py)
+```
+
 ## To do
 
 - Use last.fm to find the genre of liked songs and add to genre playlists (config file will define which last.fm genres to link to which playlists). Is more problematic than it seems because last.fm doesn't actually provide genre info for a lot of songs, and even artists.
