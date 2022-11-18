@@ -3,3 +3,4 @@ keys.ini
 venv/
 *cache*
 organiser
+.env
