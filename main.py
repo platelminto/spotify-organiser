@@ -29,4 +29,7 @@ sp = spotipy.Spotify(
 newly_saved_songs = get_newly_saved_songs(sp)
 newly_saved_songs.reverse()  # Put back into chronological order for playlist order
 
-add_songs_to_hash_playlist(sp, newly_saved_songs)
+if marked_string := os.getenv("MARKED_PLAYLIST_STRING"):
+        add_songs_to_hash_playlist(sp, newly_saved_songs)
+else:
+        add_songs_to_monthly_playlist(sp, newly_saved_songs)
