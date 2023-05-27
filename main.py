@@ -4,7 +4,7 @@ import spotipy
 from dotenv import load_dotenv
 
 from saved import get_newly_saved_songs
-from playlist import add_songs_to_monthly_playlist, add_songs_to_hash_playlist
+from playlist import add_songs_to_monthly_playlist, add_songs_to_marked_playlist
 
 load_dotenv()
 
@@ -29,9 +29,9 @@ sp = spotipy.Spotify(
 newly_saved_songs = get_newly_saved_songs(sp)
 newly_saved_songs.reverse()  # Put back into chronological order for playlist order
 
-marked_playlist_string = os.getenv("MARKED_PLAYLIST_STRING", None)
-# If it's not set, we use marked playlists since that was the default pre-.env variable.
+marked_playlist_string = os.getenv("MARKED_PLAYLIST_STRING", "#")
+# If it's not set, we use marked playlists since that was the default pre-.env variable
 if marked_playlist_string or "MARKED_PLAYLIST_STRING" not in os.environ:
-        add_songs_to_hash_playlist(sp, newly_saved_songs)
+        add_songs_to_marked_playlist(sp, newly_saved_songs, marked_playlist_string)
 else:
         add_songs_to_monthly_playlist(sp, newly_saved_songs)

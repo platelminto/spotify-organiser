@@ -9,8 +9,8 @@ def add_songs_to_monthly_playlist(sp: spotipy.Spotify, uris: List[str]):
     _add_songs_to_playlist(sp, uris, _get_monthly_playlist_id(sp))
 
 
-def add_songs_to_hash_playlist(sp: spotipy.Spotify, uris: List[str]):
-    _add_songs_to_playlist(sp, uris, _get_hash_playlist_id(sp))
+def add_songs_to_marked_playlist(sp: spotipy.Spotify, uris: List[str], marked_string: str):
+    _add_songs_to_playlist(sp, uris, _get_marked_playlist_id(sp, marked_string))
 
 
 def _add_songs_to_playlist(sp: spotipy.Spotify, uris: List[str], playlist_id):
@@ -22,8 +22,8 @@ def _get_monthly_playlist_id(sp: spotipy.Spotify):
     return _get_playlist_id(sp, _get_monthly_playlist_identifier())
 
 
-def _get_hash_playlist_id(sp: spotipy.Spotify):
-    return _get_playlist_id(sp, "#")
+def _get_marked_playlist_id(sp: spotipy.Spotify, marked_string: str):
+    return _get_playlist_id(sp, marked_string)
 
 
 def _get_playlist_id(sp: spotipy.Spotify, identifier: str):
