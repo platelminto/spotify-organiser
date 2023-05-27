@@ -1,5 +1,5 @@
 # spotify-organiser
-Organises saved Spotify songs into monthly and genre playlists.
+Organises saved Spotify songs into certain playlists. Every time it runs, it sees which songs have been saved since the latest run, and adds them to an appropriate playlist. 
 
 ## Installation
 
@@ -14,14 +14,16 @@ Copy `example.env` into `.env` and fill out the appropriate variables`SPOTIPY_CL
 
 Run periodically. There's 2 main ways of using it:
 
-- Monthly playlists: every time it runs, newly saved songs are added to a monthly playlist, identified by a {month}{year} identifier at the end of the description (e.g. '0123' for January 2023). If the playlist doesn't exist, it will create one with a default name, along with a description which includes the identifier. To use this, in `main.py`, replace line 32 with `add_songs_to_monthly_playlist()`. 
-- Marked playlists (**default**): newly saved songs are added to a playlist description ending with a '#' character, which you must manually add to the description of the playlist you care about.
+- Monthly playlists: every time it runs, newly saved songs are added to a monthly playlist, identified by a {month}{year} identifier at the end of the description (e.g. '0123' for January 2023). If the playlist doesn't exist, it will create one with a default name, along with a description which includes the identifier.
+- Marked playlists: newly saved songs are added to a playlist description ending with the string specified in `.env` (`MARKED_PLAYLIST_STRING`), which you must manually add to the description of the playlist you care about. For example, setting `MARKED_PLAYLIST_STRING=#`, songs will be added to whichever playlist's description ends with a `#`.
+
+To use monthly playlists, include `MARKED_PLAYLIST_STRING`, but leave it empty.
 
 I'd suggest running it roughly every 20 minutes. Use a VPS (e.g. [Amazon EC2](https://aws.amazon.com/ec2/)) to avoid downtime.
 
 ## Features
 
-- Add newly saved songs to a monthly playlist, or one with a description ending with a '#' character.
+- Add newly saved songs to a monthly playlist, or ones with a description ending with a specified character.
 
 ## crontab
 
