@@ -33,7 +33,7 @@ def _get_playlist_id(sp: spotipy.Spotify, identifier: str):
     if playlist_id:
         return playlist_id
 
-    return _create_playlist(sp, playlist_name, description=identifier)['id']
+    return _create_playlist(sp, playlist_name, description=identifier)["id"]
 
 
 def _get_monthly_playlist_name():
@@ -46,14 +46,14 @@ def _get_monthly_playlist_identifier():
 
 def _find_playlist_id_by_name(sp: spotipy.Spotify, playlist_name: str, offset: int = 0):
     playlists_object = sp.current_user_playlists(limit=50, offset=offset)
-    playlists = playlists_object['items']
+    playlists = playlists_object["items"]
 
     for playlist in playlists:
-        if playlist['name'] == playlist_name:
-            return playlist['id']
+        if playlist["name"] == playlist_name:
+            return playlist["id"]
 
     # Handle paging
-    if playlists_object['next']:
+    if playlists_object["next"]:
         return _find_playlist_id_by_name(sp, playlist_name, offset + 50)  # 50 is max playlists returned
 
     return None
@@ -61,22 +61,21 @@ def _find_playlist_id_by_name(sp: spotipy.Spotify, playlist_name: str, offset: i
 
 def _find_playlist_id_by_description_identifier(sp: spotipy.Spotify, identifier: str, offset: int = 0):
     playlists_object = sp.current_user_playlists(limit=50, offset=offset)
-    playlists = playlists_object['items']
+    playlists = playlists_object["items"]
 
     for playlist in playlists:
-        if playlist.get('description', "").strip().endswith(identifier):
-            return playlist['id']
+        if playlist.get("description", "").strip().endswith(identifier):
+            return playlist["id"]
 
     # Handle paging
-    if playlists_object['next']:
+    if playlists_object["next"]:
         return _find_playlist_id_by_description_identifier(sp, identifier, offset + 50)  # 50 is max playlists returned
 
     return None
 
 
 def _find_playlist_id(sp: spotipy.Spotify, identifier, default_name):
-    return (_find_playlist_id_by_description_identifier(sp, identifier) or
-            _find_playlist_id_by_name(sp, default_name))
+    return _find_playlist_id_by_description_identifier(sp, identifier) or _find_playlist_id_by_name(sp, default_name)
 
 
 def _create_playlist(sp: spotipy.Spotify, playlist_name: str, description: str):
