@@ -1,5 +1,5 @@
 # spotify-organiser
-Organises saved Spotify songs into certain playlists. Every time it runs, it sees which songs have been saved since the latest run, and adds them to an appropriate playlist. 
+Organises saved Spotify songs into playlists. Every time it runs, the script checks for any newly saved songs and adds them to certain playlists.
 
 ## Installation
 
@@ -10,20 +10,20 @@ Requires Python 3.6 or above. Run the below command from the root directory to i
 
 ## Usage
 
-Copy `example.env` into `.env` and fill out the appropriate variables`SPOTIPY_CLIENT_ID`, `SPOTIPY_CLIENT_SECRET`, and `SPOTIPY_REDIRECT_URI` corresponding to their values in your Spotify Application (make one [here](https://developer.spotify.com/dashboard/applications)). You can leave the default redirect url. Run `main.py` and follow the authentication process (you only have to do this once).
+Copy `example.env` into `.env` and fill out the appropriate variables`SPOTIPY_CLIENT_ID`, `SPOTIPY_CLIENT_SECRET`, and `SPOTIPY_REDIRECT_URI` corresponding to their values in your Spotify Application (it's easy & free - make one [here](https://developer.spotify.com/dashboard/applications)). You can leave the default redirect url. Run `main.py` and follow the authentication process (you only have to do this once).
 
-Run periodically. There's 2 main ways of using it:
+Run periodically. On reach run, the script will add newly saved songs to either:
 
-- Monthly playlists: every time it runs, newly saved songs are added to a monthly playlist, identified by a {month}{year} identifier at the end of the description (e.g. '0123' for January 2023). If the playlist doesn't exist, it will create one with a default name, along with a description which includes the identifier.
-- Marked playlists: newly saved songs are added to a playlist description ending with the string specified in `.env` (`MARKED_PLAYLIST_STRING`), which you must manually add to the description of the playlist you care about. For example, setting `MARKED_PLAYLIST_STRING=#`, songs will be added to whichever playlist's description ends with a `#`.
+- Monthly playlists: identified by a {month}{year} identifier at the end of the playlist's description (e.g. '0123' for January 2023). If the playlist doesn't exist, it will create one with a default name, along with a description which includes the identifier. Using monthly playlists means more automatic playlist management: every month, a new playlist will be created, and songs will be added to it until the next month.
+- Marked playlists: identified by `MARKED_PLAYLIST_STRING` (as defined in `.env`) at the end of the playlist's description. You must manually add this string to the description of the playlist you want songs to be added to. For example, setting `MARKED_PLAYLIST_STRING=#`, songs will be added to whichever playlist's description ends with a `#`. Using marked playlists means you decide when you want new songs to go to a new playlist - do this by removing `MARKED_PLAYLIST_STRING` from the old playlist description and appending it to the new one.
 
-To use monthly playlists, include `MARKED_PLAYLIST_STRING`, but leave it empty.
+To use monthly playlists, make sure to still include `MARKED_PLAYLIST_STRING`, but leave it empty.
 
-I'd suggest running it roughly every 20 minutes. Use a VPS (e.g. [Amazon EC2](https://aws.amazon.com/ec2/)) to avoid downtime.
+I'd suggest running it roughly every 20 minutes. Use a VPS (e.g. [Amazon EC2](https://aws.amazon.com/ec2/)) to avoid downtime, or an always-on local machine.
 
 ## Features
 
-- Add newly saved songs to a monthly playlist, or ones with a description ending with a specified character.
+- Add newly saved songs to a monthly playlist, or one marked by a specific string.
 
 ## crontab
 
